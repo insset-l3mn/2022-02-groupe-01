@@ -18,7 +18,7 @@ class Questions extends React.Component {
     getQuestions() {
 
         // Make a request for a user with a given ID
-        axios.get('http://192.168.43.199:8080/ProjetJakarta/resources/questions/')
+        axios.get(process.env.REACT_APP_BACKEND_ENDPOINT+'questions/')
         .then((response) => {
             
             this.setState({questions: response.data});

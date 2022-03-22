@@ -2,3 +2,54 @@
   max-width: 980px;
 }
 
+.domain-card {
+  background-color: grey;
+}
+
+.domain-card-0 {
+  background-color: #ce5809;
+}
+
+.domain-card-1 {
+  background-color: #4158D0;
+}
+
+.domain-card-2 {
+  background-color: #0093E9;
+}
+
+.domain-card-3 {
+  background-color: #08b960;
+}
+
+.domain-card-4 {
+  background-color: #9b0cbf;
+}
+
+.domain-card-5 {
+  background-color: #ddaf09
+}
+
+.domain-card-6 {
+  background-color: #4c4c4c
+}
+
+.domain-card-7 {
+  background-color: #c92626
+}
+
+.domain-card-8 {
+  background-color: #4CAF50
+}
+
+.domain-card-9 {
+  background-color: #ec209a
+}
+
+.domain-card-10 {
+  background-color: #795548
+}
+
+.domain-card-11 {
+  background-color: #607D8B
+}
