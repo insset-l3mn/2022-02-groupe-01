@@ -19,14 +19,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import service.AbstractFacade;
 
 /**
  *
  * @author mdcreative
  */
 @Stateless
-@Path("questions")
+@Path("com.mouad.jakarta.entities.questions")
 public class QuestionsFacadeREST extends AbstractFacade<Questions> {
 
     @PersistenceContext(unitName = "customerPU")

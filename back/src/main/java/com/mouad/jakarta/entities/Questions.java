@@ -12,7 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -28,7 +30,6 @@ import javax.validation.constraints.Size;
 @NamedQueries({
     @NamedQuery(name = "Questions.findAll", query = "SELECT q FROM Questions q"),
     @NamedQuery(name = "Questions.findById", query = "SELECT q FROM Questions q WHERE q.id = :id"),
-    @NamedQuery(name = "Questions.findByDomain", query = "SELECT q FROM Questions q WHERE q.domain = :domain"),
     @NamedQuery(name = "Questions.findByQuestion", query = "SELECT q FROM Questions q WHERE q.question = :question"),
     @NamedQuery(name = "Questions.findByAnswer", query = "SELECT q FROM Questions q WHERE q.answer = :answer")})
 public class Questions implements Serializable {
@@ -39,10 +40,6 @@ public class Questions implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "domain")
-    private int domain;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1000)
@@ -59,6 +56,9 @@ public class Questions implements Serializable {
     @Size(min = 1, max = 1000)
     @Column(name = "answer")
     private String answer;
+    @JoinColumn(name = "domain", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Domains domain;
 
     public Questions() {
     }
@@ -67,9 +67,8 @@ public class Questions implements Serializable {
         this.id = id;
     }
 
-    public Questions(Integer id, int domain, String question, String options, String answer) {
+    public Questions(Integer id, String question, String options, String answer) {
         this.id = id;
-        this.domain = domain;
         this.question = question;
         this.options = options;
         this.answer = answer;
@@ -81,14 +80,6 @@ public class Questions implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public int getDomain() {
-        return domain;
-    }
-
-    public void setDomain(int domain) {
-        this.domain = domain;
     }
 
     public String getQuestion() {
@@ -115,6 +106,14 @@ public class Questions implements Serializable {
         this.answer = answer;
     }
 
+    public Domains getDomain() {
+        return domain;
+    }
+
+    public void setDomain(Domains domain) {
+        this.domain = domain;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -137,7 +136,7 @@ public class Questions implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.tpcustomerapplication.entities.Questions[ id=" + id + " ]";
+        return "com.mouad.jakarta.entities.Questions[ id=" + id + " ]";
     }
     
 }
