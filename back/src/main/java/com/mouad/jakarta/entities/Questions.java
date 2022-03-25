@@ -6,6 +6,7 @@
 package com.mouad.jakarta.entities;
 
 import java.io.Serializable;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -106,6 +107,7 @@ public class Questions implements Serializable {
         this.answer = answer;
     }
 
+    @JsonbTransient
     public Domains getDomain() {
         return domain;
     }

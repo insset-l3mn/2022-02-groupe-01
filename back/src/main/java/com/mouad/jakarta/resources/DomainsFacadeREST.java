@@ -25,7 +25,7 @@ import javax.ws.rs.core.MediaType;
  * @author mdcreative
  */
 @Stateless
-@Path("com.mouad.jakarta.entities.domains")
+@Path("domains")
 public class DomainsFacadeREST extends AbstractFacade<Domains> {
 
     @PersistenceContext(unitName = "customerPU")
