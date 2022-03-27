@@ -63,14 +63,13 @@ public class QuestionsFacadeREST extends AbstractFacade<Questions> {
         return super.find(id);
     }
 
-
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Questions> findAll() {
         return super.findAll();
     }
-    
+
     @GET
     @Path("domain/{domain}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

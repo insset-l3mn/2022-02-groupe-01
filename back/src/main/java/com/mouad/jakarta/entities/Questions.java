@@ -6,8 +6,10 @@
 package com.mouad.jakarta.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +20,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -61,6 +64,8 @@ public class Questions implements Serializable {
     @JoinColumn(name = "domain", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Domains domain;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "question")
+    private Collection<Responses> responsesCollection;
 
     public Questions() {
     }
@@ -115,6 +120,14 @@ public class Questions implements Serializable {
 
     public void setDomain(Domains domain) {
         this.domain = domain;
+    }
+
+    public Collection<Responses> getResponsesCollection() {
+        return responsesCollection;
+    }
+
+    public void setResponsesCollection(Collection<Responses> responsesCollection) {
+        this.responsesCollection = responsesCollection;
     }
 
     @Override

@@ -7,6 +7,7 @@ package com.mouad.jakarta.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,6 +35,12 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Domains.findByDescription", query = "SELECT d FROM Domains d WHERE d.description = :description")})
 public class Domains implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 200)
@@ -46,13 +53,6 @@ public class Domains implements Serializable {
     private String description;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "domain")
     private Collection<Questions> questionsCollection;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
 
     public Domains() {
     }
@@ -75,6 +75,30 @@ public class Domains implements Serializable {
         this.id = id;
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @JsonbTransient
+    public Collection<Questions> getQuestionsCollection() {
+        return questionsCollection;
+    }
+
+    public void setQuestionsCollection(Collection<Questions> questionsCollection) {
+        this.questionsCollection = questionsCollection;
+    }
 
     @Override
     public int hashCode() {
@@ -99,30 +123,6 @@ public class Domains implements Serializable {
     @Override
     public String toString() {
         return "com.mouad.jakarta.entities.Domains[ id=" + id + " ]";
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Collection<Questions> getQuestionsCollection() {
-        return questionsCollection;
-    }
-
-    public void setQuestionsCollection(Collection<Questions> questionsCollection) {
-        this.questionsCollection = questionsCollection;
     }
     
 }

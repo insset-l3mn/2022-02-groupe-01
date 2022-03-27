@@ -5,7 +5,6 @@
  */
 package com.mouad.jakarta.resources;
 
-import com.mouad.jakarta.AbstractFacade;
 import com.mouad.jakarta.entities.Students;
 import java.util.List;
 import javax.ejb.Stateless;

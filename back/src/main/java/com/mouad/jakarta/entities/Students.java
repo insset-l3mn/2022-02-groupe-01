@@ -6,7 +6,9 @@
 package com.mouad.jakarta.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -54,6 +57,8 @@ public class Students implements Serializable {
     @Size(min = 1, max = 250)
     @Column(name = "password")
     private String password;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "student")
+    private Collection<Responses> responsesCollection;
 
     public Students() {
     }
@@ -101,6 +106,14 @@ public class Students implements Serializable {
         this.password = password;
     }
 
+    public Collection<Responses> getResponsesCollection() {
+        return responsesCollection;
+    }
+
+    public void setResponsesCollection(Collection<Responses> responsesCollection) {
+        this.responsesCollection = responsesCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -123,7 +136,7 @@ public class Students implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.tpcustomerapplication.Students[ id=" + id + " ]";
+        return "com.mouad.jakarta.entities.Students[ id=" + id + " ]";
     }
     
 }
