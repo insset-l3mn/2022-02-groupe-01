@@ -1,6 +1,7 @@
 import React from 'react';
 
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 
 import ForceDirectedGraph from '../ForceDirectedGraph/ForceDirectedGraph';
@@ -57,10 +58,10 @@ class Home extends React.Component {
                             return (
                             
                                 <div className='col-3 p-2'>
-                                    <a href="#" className={'h-100 text-white card shadow-sm py-4 px-4 text-decoration-none p-1 domain-card domain-card-'+i}>
+                                    <Link to={'qustions/domain/'+object.id} className={'h-100 text-white card shadow-sm py-4 px-4 text-decoration-none p-1 domain-card domain-card-'+i}>
                                         <h4>{object.label}</h4>
                                         <p>{object.description}</p>
-                                    </a>
+                                    </Link>
                                 </div>
                             
                             );

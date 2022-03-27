@@ -1,80 +1,116 @@
-import React from 'react';
+import React, { useState, useEffect , useRef} from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useForm } from "react-hook-form";
 
 
-class Questions extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            questions: false,
-            currentQuestion: 0
-        };
+function Questions() {
 
-        this.getQuestions();
+
+
+    const [questions, setQuestions] = useState([]);
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+
+
+    let { domainId } = useParams();
+
+
+    const onSubmit = data => console.log(data);
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+          const result = await axios(
+            process.env.REACT_APP_BACKEND_ENDPOINT+'questions/domain/'+domainId,
+          );
     
-    }
-
-    getQuestions() {
-
-        // Make a request for a user with a given ID
-        axios.get(process.env.REACT_APP_BACKEND_ENDPOINT+'questions/')
-        .then((response) => {
-            
-            this.setState({questions: response.data});
-
-            console.log(response.data);
+          setQuestions(result.data);
           
-        })
-        .catch((error) => {
 
-        })
-        .then(function () {
-        // always executed
-        });
-    }
+        };
+    
+        fetchData();
+      }, []);
 
-    answerClicked(event) {
+
+
+    function nextButton(event) {
+        event.preventDefault();
         // Correct
 
-        this.setState(prevState => {
-            console.log('clicked');
-            return {currentQuestion: prevState.currentQuestion + 1}
-         })
+        console.log(currentQuestion);
+        setCurrentQuestion(currentQuestion+1)
 
-         
-        
     }
 
-    render () {
+    function prevButton(event) {
+        event.preventDefault();
+        // Correct
 
-        let currentQuestion;
-        let options = {};
-        if (this.state.questions) {
+        setCurrentQuestion(currentQuestion-1)
 
-            currentQuestion = this.state.questions[this.state.currentQuestion];
-            options = JSON.parse(currentQuestion.options);
-            
-        }
+    }
+
+    function handleSubmit() {
+
+    }
+    
+    function paginate(event) {
+        event.preventDefault();
+
+
+        let index = event.target.getAttribute("data-index");
+
+
+        setCurrentQuestion(Number(index))
+
+    }
+    
+    
+
         return (
             
             <div className='questions-panel'>
-                {options.length > 0 &&
+                {questions.length > 0 &&
                 <>
-                <h4>Question {this.state.currentQuestion} : {currentQuestion.question}</h4>
-                <form ref={(el) => this.myFormRef = el}>
+                <div className='progress mb-4 mt-3'>
+                    <div className='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100' style={{width: ((100/questions.length)*currentQuestion+1)+`%`}}></div>
+                </div>
+
+                <nav >
+                    <ul className='pagination pagination-sm'>
+
+                        {questions.map((object, i) => {
+                            return (
+                                <li onClick={paginate}  className={`page-item` + ((currentQuestion == i) ? ` active` : ``) }><a  data-index={i} className='page-link' href='#'>{i+1}</a></li>
+                            );
+                        })}
+
+                    </ul>
+                </nav>
+                <h4>Question {Number(currentQuestion)+1} : {questions[currentQuestion].question}</h4>
+                <form onSubmit={handleSubmit(onSubmit)}>
                 {
-                    options.map((object, i) => {
-                        setTimeout(() => {}, 1000);
+                    questions.map((object, questionIndex) => {
+
                         return (
-                            <label className='shadow-sm col-8 card p-3 mb-2' style={{cursor: 'pointer'}} >
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name={`question_option` + this.state.currentQuestion } />
-                                    <span class="form-check-label">
-                                        {object.value}
-                                    </span>
-                                </div>
-                            </label>
+                            <div className={`question ` + ((currentQuestion == questionIndex) ? `show` : `d-none`) }>
+                                {
+                                    JSON.parse(object.options).map((option, i) => {
+                                        return (
+                                            <label className='shadow-sm col-8 card p-3 mb-2' style={{cursor: 'pointer'}} >
+                                                <div className='form-check'>
+                                                    <input className='form-check-input' type='radio' value={option.key} name={`question_option[` + questionIndex +`]` } />
+                                                    <span className='form-check-label'>
+                                                        {option.value}
+                                                    </span>
+                                                </div>
+                                            </label>
+                                        );
+                                    })
+                                }
+                            </div>
                         );
                     })
                 }
@@ -83,13 +119,15 @@ class Questions extends React.Component {
 
                 }
                 
+                <div className='my-5'>
+                    <button className='btn btn-secondary' onClick={prevButton}>Precedent</button>
 
-                <button className='btn btn-success' onClick={this.answerClicked.bind(this)}>Suivant</button>
+                    <button className='btn btn-primary float-end' onClick={nextButton}>Suivant</button>
+                </div>
             </div>
             
         );
         
-    }
 }
 
 export default Questions;

@@ -23,7 +23,7 @@ class App extends React.Component {
                         <div className='col-12'>
                             <Routes>
                                 <Route path="" element={<Home />} />
-                                <Route path="questions" element={<Questions />} />
+                                <Route path="qustions/domain/:domainId"  element={<Questions /> } />
                             </Routes>
                         </div>
                     </div>
