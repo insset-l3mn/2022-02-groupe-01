@@ -32,6 +32,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Questions.findAll", query = "SELECT q FROM Questions q"),
     @NamedQuery(name = "Questions.findById", query = "SELECT q FROM Questions q WHERE q.id = :id"),
     @NamedQuery(name = "Questions.findByQuestion", query = "SELECT q FROM Questions q WHERE q.question = :question"),
+    @NamedQuery(name = "Questions.findByDomain", query = "SELECT q FROM Questions q WHERE q.domain = :domain"),
     @NamedQuery(name = "Questions.findByAnswer", query = "SELECT q FROM Questions q WHERE q.answer = :answer")})
 public class Questions implements Serializable {
 
