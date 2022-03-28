@@ -3,11 +3,14 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 
-
+import {Modal, Button} from "react-bootstrap";
 
 function Questions() {
 
+	const [show, setShow] = useState(false);
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
 	const [questions, setQuestions] = useState([]);
 	const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -18,7 +21,49 @@ function Questions() {
 
 	const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const onSubmit = data => {
-		let obj = data.question_option.reduce((a, v, key) => ({ ...a, [key]: v}), {}) 
+		let reponses = data.question_option.reduce((a, v, key) => ({ ...a, [key]: v}), {});
+
+		let reponsesArray = [];
+		for (const key in reponses) {
+			if (Object.hasOwnProperty.call(reponses, key)) {
+				const element = reponses[key];
+
+				reponsesArray.push({
+					"student": {"id": 1},
+					"question": {"id": 1},
+					"response": element ? element : 0
+				});
+			}
+		}
+
+		var dataToSend = {
+			method: 'POST',
+			url: process.env.REACT_APP_BACKEND_ENDPOINT+'responses',
+
+			data: JSON.stringify(reponsesArray),
+
+			headers: {
+					"Content-Type": "application/json",
+					"Accept": "*/*",
+					"Accept-Encoding": "gzip, deflate, br",
+					"Connection": "keep-alive"
+			},
+			json: true
+	};
+	
+		axios(dataToSend)
+			.then(function(response){
+					
+				setShow(true);
+
+
+
+
+
+			})
+			.catch(function(error){
+				console.log(error);
+			});
 
 
 	};
@@ -37,7 +82,6 @@ function Questions() {
 	
 		fetchData();
 	  }, []);
-
 
 
 	function nextButton(event) {
@@ -71,11 +115,28 @@ function Questions() {
 
 	}
 
+
 	
 
 		return (
 			
 			<div className='questions-panel'>
+				<Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Question Completé</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+						<div className='text-center text-success'>
+							<h1 className='display-1'>✓</h1>
+							<h3>Votre question a été envoyée</h3>
+						</div>
+				</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
 				{questions.length > 0 &&
 				<>
 				<div className='progress mb-4 mt-3'>
