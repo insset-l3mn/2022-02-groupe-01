@@ -1,5 +1,5 @@
 import React from 'react'
-// import '../../style/login.css'
+ import '../../style/login.css'
 
 import { Routes,Navigate } from "react-router-dom";
 
@@ -49,7 +49,8 @@ class Login extends React.Component {
         const isError = this.state.error;
         return (
 
-            <main className="form-signin card shadow-sm px-4 py-4">
+            <div className='login-page'>
+                <main className="form-signin card shadow-sm px-4 py-4">
                 {isError ? 
                     <Alert variant="danger">
                         <span>Erreur, e-mail ou mot de passe incorrect</span>
@@ -80,6 +81,7 @@ class Login extends React.Component {
                     <button className="w-100 btn btn-lg btn-warning mt-1" type="submit">Inscrivez-vous</button>
                 </form>
                 </main>
+            </div>
         );
     }
 }
