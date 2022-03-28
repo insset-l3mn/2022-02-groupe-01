@@ -1,11 +1,12 @@
 html,
 body,
 #root,
-.App {
+.App,
+.login-page {
   height: 100%;
 }
 
-.App {
+.login-page {
   display: flex;
   align-items: center;
   padding-top: 40px;
