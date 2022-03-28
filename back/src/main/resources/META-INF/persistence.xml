@@ -19,6 +19,8 @@
             
         <class>com.mouad.jakarta.entities.Students</class>
             
+        <class>com.mouad.jakarta.entities.Skills</class>
+            
         <properties>
                   
             <property name="eclipselink.logging.level" value="FINE"/>
