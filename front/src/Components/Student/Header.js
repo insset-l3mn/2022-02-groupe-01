@@ -13,8 +13,25 @@ class Header extends React.Component {
                         <span class="fs-4">Ekonomika</span>
                     </a>
 
+                    <ul class="nav nav-pills mb-auto ms-auto">
+
+                        
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active" aria-current="page">
+                                Dashboard
+                            </a>
+                        </li>
+                        
+                        <hr />
+                        <li>
+                            <a href="#" className='nav-link link-dark'>Se Déconnecter</a>
+                        </li>
+                    </ul>
                     
                 </div>
+
+                
+
           </header>
       
         );
